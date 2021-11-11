@@ -1,8 +1,10 @@
 #include <iostream>
 
+#include <stb/stb_image.h>
+
 int main()
 {
-	std::cout << "Main\n";
+	
 
 	return 0;
 }
