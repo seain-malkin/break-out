@@ -1,0 +1,3 @@
+#define BreakOut_VERSION_MAJOR @BreakOut_VERSION_MAJOR@
+#define BreakOut_VERSION_MINOR @BreakOut_VERSION_MINOR@
+#cmakedefine USE_HELLO
