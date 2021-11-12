@@ -57,6 +57,14 @@ set(ETC_L etc)
 add_subdirectory("include/${ETC_L}")
 list(APPEND install_libs "${ETC_L}")
 
+set(GLFW_L GLFW)
+add_subdirectory("include/${GLFW_L}")
+list(APPEND install_libs "${GLFW_L}")
+
+set(GLM_L glm)
+add_subdirectory("include/${GLM_L}")
+list(APPEND install_libs "${GLM_L}")
+
 # Project EXE
 add_executable("${PROJECT_NAME}" "src/main.cpp" "src/stb_imp.cpp")
 
