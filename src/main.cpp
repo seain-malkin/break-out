@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <stb/stb_image.h>
+#include <etc/stb_image.h>
 
 int main()
 {

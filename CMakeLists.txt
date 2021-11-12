@@ -53,14 +53,9 @@ if(NOT CMAKE_CONFIGURATION_TYPES)
 	endif()
 endif()
 
-# Libraries
-set(HELLO_L hello)
-add_subdirectory("include/${HELLO_L}")
-list(APPEND install_libs "${HELLO_L}")
-
-set(STB_L stb)
-add_subdirectory("include/${STB_L}")
-list(APPEND install_libs "${STB_L}")
+set(ETC_L etc)
+add_subdirectory("include/${ETC_L}")
+list(APPEND install_libs "${ETC_L}")
 
 # Project EXE
 add_executable("${PROJECT_NAME}" "src/main.cpp" "src/stb_imp.cpp")
