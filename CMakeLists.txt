@@ -24,13 +24,11 @@ target_compile_options(breakout_compiler_flags INTERFACE
   "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused>>"
   "$<${msvc_cxx}:$<BUILD_INTERFACE:-W3>>")
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+#set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
-set(VALID_BUILD_TYPES "Release" "Debug" "MinSizeRel" "RelWithDebInfo")
-
-option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
+option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 
 # BEGIN PROJECT
 project("BreakOut" VERSION 0.1 LANGUAGES CXX C)
@@ -38,44 +36,39 @@ project("BreakOut" VERSION 0.1 LANGUAGES CXX C)
 # Generate cmake settings header file
 configure_file("${PROJECT_NAME}Config.h.in" "${PROJECT_NAME}Config.h")
 
-# Set default build type to "Release"
-if(NOT CMAKE_CONFIGURATION_TYPES)
-	if("${CMAKE_BUILD_TYPE}" STREQUAL "")
-		set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build configuration" FORCE)
-	endif()
-endif()
-
-# Ensure build type is valid
-if(NOT CMAKE_CONFIGURATION_TYPES)
-	list(FIND VALID_BUILD_TYPES "${CMAKE_BUILD_TYPE}" INDEX)
-	if("${INDEX}" MATCHES -1)
-		message(FATAL_ERROR "Invalid build type. Valid types are [${VALID_BUILD_TYPES}]")
-	endif()
-endif()
-
-set(ETC_L etc)
-add_subdirectory("include/${ETC_L}")
-list(APPEND install_libs "${ETC_L}")
-
-set(GLFW_L GLFW)
-add_subdirectory("include/${GLFW_L}")
-list(APPEND install_libs "${GLFW_L}")
-
-set(GLM_L glm)
-add_subdirectory("include/${GLM_L}")
-list(APPEND install_libs "${GLM_L}")
-
 # Project EXE
-add_executable("${PROJECT_NAME}" "src/main.cpp" "src/stb_imp.cpp")
+add_executable("${PROJECT_NAME}" "src/main.cpp")
 
-# Link required libraries
-if (DEFINED install_libs)
-	target_link_libraries("${PROJECT_NAME}" "${install_libs}")
-endif()
+# OpenGL
+find_package(OpenGL REQUIRED)
+
+# GLM
+set(glm_DIR "C:/Program Files (x86)/glm/lib/cmake/glm")
+find_package(GLM REQUIRED)
+target_link_libraries("${PROJECT_NAME}" glm::glm)
+
+# GLFW 
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+add_subdirectory("${CMAKE_SOURCE_DIR}/include/glfw-3.3.5")
+
+# GLAD & STB_IMAGE
+add_library(STB_IMAGE "thirdparty/stb_image.cpp")
+add_library(GLAD "thirdparty/glad.c")
+
+# Link libraries to exec
+set(LIBS glfw opengl32 STB_IMAGE GLAD)
+target_link_libraries("${PROJECT_NAME}" ${LIBS})
+
+include_directories(
+	"${CMAKE_SOURCE_DIR}/src"
+	"${CMAKE_SOURCE_DIR}/include"
+)
 
 target_include_directories("${PROJECT_NAME}" PUBLIC 
 	"${PROJECT_BINARY_DIR}") #Required for BreakOutConfig.h
 						   						 
 # Install EXE
 install(TARGETS "${PROJECT_NAME}" DESTINATION bin)
-install(FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.h" DESTINATION include)
+# install(FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.h" DESTINATION include)
