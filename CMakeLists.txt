@@ -26,11 +26,27 @@ target_compile_options(breakout_compiler_flags INTERFACE
 # Options
 option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 
-# SRC DIR: Creates the Executable target
-add_subdirectory(src)
+add_executable("${PROJECT_NAME}" "src/main.cpp")
+
+# OpenGL & GLM
+set(glm_DIR "C:/Program Files (x86)/glm/lib/cmake/glm")
+find_package(OpenGL REQUIRED)
+find_package(GLM REQUIRED)
+
+# GLFW 
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+add_subdirectory(include/glfw-3.3.5)
+
+# GLAD & STB_IMAGE
+add_subdirectory(thirdparty)
+
+# Link libraries to executable
+target_link_libraries("${PROJECT_NAME}" glm::glm glfw opengl32 thirdparty)
 
 # Include directory containing "Config.h"
-target_include_directories("${PROJECT_NAME}" PUBLIC "${PROJECT_BINARY_DIR}")
+target_include_directories("${PROJECT_NAME}" PRIVATE "${PROJECT_BINARY_DIR}")
 
 # Install EXE
 install(TARGETS "${PROJECT_NAME}" DESTINATION bin)
