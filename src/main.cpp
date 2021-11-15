@@ -7,6 +7,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <stb/stb_image.h>
 
+#include "Config.h"
+
 int main()
 {
 	
