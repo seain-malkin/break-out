@@ -47,7 +47,7 @@ add_subdirectory(include/stb)
 add_subdirectory(src)
 
 # Link libraries to executable
-target_link_libraries("${PROJECT_NAME}" glm::glm glfw opengl32 glad stb)
+target_link_libraries("${PROJECT_NAME}" PRIVATE glm::glm glfw opengl32 glad stb)
 
 # Include directory containing "Config.h"
 target_include_directories("${PROJECT_NAME}" PRIVATE "${PROJECT_BINARY_DIR}")
