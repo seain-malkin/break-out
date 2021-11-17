@@ -26,7 +26,8 @@ target_compile_options(breakout_compiler_flags INTERFACE
 # Options
 option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 
-add_executable("${PROJECT_NAME}" "src/main.cpp")
+#add_executable("${PROJECT_NAME}" "src/main.cpp")
+
 
 # OpenGL & GLM
 set(glm_DIR "C:/Program Files (x86)/glm/lib/cmake/glm")
@@ -39,11 +40,15 @@ set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 add_subdirectory(include/glfw-3.3.5)
 
-# GLAD & STB_IMAGE
-add_subdirectory(thirdparty)
+# Other Libraries
+add_subdirectory(include/KHR)
+add_subdirectory(include/glad)
+add_subdirectory(include/stb)
+
+add_subdirectory(src)
 
 # Link libraries to executable
-target_link_libraries("${PROJECT_NAME}" glm::glm glfw opengl32 thirdparty)
+target_link_libraries("${PROJECT_NAME}" glm::glm glfw opengl32 glad stb)
 
 # Include directory containing "Config.h"
 target_include_directories("${PROJECT_NAME}" PRIVATE "${PROJECT_BINARY_DIR}")
