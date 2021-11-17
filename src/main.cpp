@@ -19,8 +19,18 @@ struct Vertex
 	float z;
 };
 
+struct TextureCoord
+{
+	float x;
+	float y;
+};
+
 Vertex vertices[] = {
 	{-0.5, -0.5, 0.0}, {-0.5, 0.5, 0.0}, {0.5, 0.5, 0.0}, {0.5, -0.5, 0.0}
+};
+
+TextureCoord texCoord[] = {
+	{0.0, 0.0}, {0.0, 1.0}, {1.0, 1.0}, {1.0, 0.0}
 };
 
 unsigned int indices[] = { 0, 1, 2, 0, 2, 3 };
@@ -49,20 +59,27 @@ int main()
 		return 2;
 	}
 
-	unsigned int vbo, ebo, vao;
+	unsigned int ebo, vao;
+	unsigned int vbos[2];
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glGenBuffers(2, vbos);
+	glBindBuffer(GL_ARRAY_BUFFER, vbos[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbos[1]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(texCoord), &texCoord, GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
 
 	glGenBuffers(1, &ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), &indices, GL_STATIC_DRAW);
-
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 
 	Shader basicShader{ "assets/shader/basic.3.3.vs", "assets/shader/basic.3.3.fs" };
 
@@ -82,7 +99,7 @@ int main()
 		glfwSwapBuffers(window);
 	}
 
-	glDeleteBuffers(1, &vbo);
+	glDeleteBuffers(2, vbos);
 	glDeleteBuffers(1, &ebo);
 	glDeleteVertexArrays(1, &vao);
 
