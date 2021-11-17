@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION "3.21.0" FATAL_ERROR)
+cmake_minimum_required(VERSION "3.20.0" FATAL_ERROR)
 
 project("BreakOut" VERSION 0.1 LANGUAGES CXX C)
 
@@ -25,9 +25,6 @@ target_compile_options(breakout_compiler_flags INTERFACE
 
 # Options
 option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
-
-#add_executable("${PROJECT_NAME}" "src/main.cpp")
-
 
 # OpenGL & GLM
 set(glm_DIR "C:/Program Files (x86)/glm/lib/cmake/glm")

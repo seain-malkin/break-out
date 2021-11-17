@@ -1,6 +1,9 @@
 #pragma once
 
-struct ObjectBuffer
+class ObjectBuffer
 {
-	size_t glid;
+public:
+	ObjectBuffer();
+private:
+	int glid;
 };
