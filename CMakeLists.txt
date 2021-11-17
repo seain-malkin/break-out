@@ -26,6 +26,8 @@ target_compile_options(breakout_compiler_flags INTERFACE
 # Options
 option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 
+add_executable("${PROJECT_NAME}" "src/main.cpp")
+
 # OpenGL & GLM
 set(glm_DIR "C:/Program Files (x86)/glm/lib/cmake/glm")
 find_package(OpenGL REQUIRED)
@@ -49,6 +51,12 @@ target_link_libraries("${PROJECT_NAME}" glm::glm glfw opengl32 glad stb)
 
 # Include directory containing "Config.h"
 target_include_directories("${PROJECT_NAME}" PRIVATE "${PROJECT_BINARY_DIR}")
+
+add_custom_command(
+  TARGET "${PROJECT_NAME}" POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${CMAKE_SOURCE_DIR}/assets" "$<TARGET_FILE_DIR:${PROJECT_NAME}>/assets"
+)
 
 # Install EXE
 install(TARGETS "${PROJECT_NAME}" DESTINATION bin)
