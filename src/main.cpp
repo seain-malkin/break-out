@@ -9,6 +9,7 @@
 
 #include <oglbuffer/ObjectBuffer.h>
 #include <oglasset/Shader.h>
+#include <oglasset/Texture.h>
 
 #include "Config.h"
 
@@ -80,6 +81,9 @@ int main()
 	glGenBuffers(1, &ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), &indices, GL_STATIC_DRAW);
+
+	Texture catalina{ "assets/texture/catalina.jpg" };
+	catalina.generate();
 
 	Shader basicShader{ "assets/shader/basic.3.3.vs", "assets/shader/basic.3.3.fs" };
 
