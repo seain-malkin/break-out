@@ -7,9 +7,8 @@
     },
     "configurePresets": [
         {
-            "name": "debug",
-            "displayName": "Debug Config",
-            "description": "Debug build configuration",
+            "name": "base",
+            "hidden": true,
             "binaryDir": "${sourceDir}/build/${presetName}",
             "generator": "Visual Studio 16 2019",
             "architecture": {
@@ -17,10 +16,13 @@
                 "strategy": "set"
             },
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_C_COMPILER": "cl",
                 "CMAKE_CXX_COMPILER": "cl",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}"
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
+                "CMAKE_TOOLCHAIN_FILE": {
+                    "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+                    "type": "FILEPATH"
+                }
             },
             "vendor": {
                 "microsoft.com/VisualStudioSettings/CMake/1.0": {
@@ -29,13 +31,16 @@
             }
         },
         {
+            "name": "debug",
+            "inherits": "base",
+            "displayName": "x64 Debug",
+            "description": "Debug build (x64)"
+        },
+        {
             "name": "release",
-            "inherits": "debug",
-            "displayName": "Release Config",
-            "description": "Release build configuration",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release"
-            }
+            "inherits": "base",
+            "displayName": "x64 Release",
+            "description": "Release build (x64)"
         }
     ],
     "buildPresets": [

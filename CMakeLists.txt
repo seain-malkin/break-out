@@ -31,6 +31,7 @@ add_executable("${PROJECT_NAME}" "src/main.cpp")
 # OpenGL & GLM
 set(glm_DIR "C:/Program Files (x86)/glm/lib/cmake/glm")
 find_package(OpenGL REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
 find_package(glm REQUIRED)
 
 # GLFW 
@@ -47,7 +48,7 @@ add_subdirectory(include/stb)
 add_subdirectory(src)
 
 # Link libraries to executable
-target_link_libraries("${PROJECT_NAME}" PRIVATE glm::glm glfw opengl32 glad stb)
+target_link_libraries("${PROJECT_NAME}" PRIVATE spdlog::spdlog glm::glm glfw opengl32 glad stb)
 
 # Include directory containing "Config.h"
 target_include_directories("${PROJECT_NAME}" PRIVATE "${PROJECT_BINARY_DIR}")
