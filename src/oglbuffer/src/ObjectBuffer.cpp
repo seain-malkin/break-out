@@ -1,7 +1,10 @@
 #include <oglbuffer/ObjectBuffer.h>
 
 ObjectBuffer::ObjectBuffer(GLenum target)
-: glid(0), target(target) {}
+: glid(0), target(target) 
+{
+    glGenBuffers(1, &glid);
+}
 
 ObjectBuffer::~ObjectBuffer()
 {

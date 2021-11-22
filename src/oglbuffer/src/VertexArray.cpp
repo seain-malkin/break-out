@@ -12,24 +12,27 @@ VertexArray::~VertexArray()
 
 void VertexArray::bind() const
 {
-    
+    glBindVertexArray(glid);
 }
 
 void VertexArray::unbind() const
 {
-
+    glBindVertexArray(0);
 }
 
 void VertexArray::addBuffer(ObjectBuffer buffer)
 {
     bind();
     buffer.bind();
+    unbind();
 }
 
 void VertexArray::addBuffer(ObjectBuffer buffer, const VertexAttribute attrib)
 {
+    bind();
     buffer.bind();
     attrib.enable();
+    unbind();
 }
 
 void VertexArray::addBuffer(
@@ -37,10 +40,12 @@ void VertexArray::addBuffer(
     const std::vector<VertexAttribute> attribs
 )
 {
+    bind();
     buffer.bind();
 
     for (const auto &attrib : attribs)
     {
         attrib.enable();
     }
+    unbind();
 }

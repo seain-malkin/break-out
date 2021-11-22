@@ -64,7 +64,7 @@ int main()
 
 	VertexArray vertexArray;
 	ObjectBuffer vertexBuffer, stBuffer, indiceBuffer{ GL_ELEMENT_ARRAY_BUFFER };
-
+	
 	vertexBuffer.allocate(sizeof(vertices), vertices);
 	stBuffer.allocate(sizeof(texCoords), texCoords);
 	indiceBuffer.allocate(sizeof(indices), indices);
