@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION "3.20.0" FATAL_ERROR)
+cmake_minimum_required(VERSION "3.19.0" FATAL_ERROR)
 
 project("BreakOut" VERSION 0.1 LANGUAGES CXX C)
 
@@ -31,7 +31,7 @@ add_executable("${PROJECT_NAME}" "src/main.cpp")
 # OpenGL & GLM
 set(glm_DIR "C:/Program Files (x86)/glm/lib/cmake/glm")
 find_package(OpenGL REQUIRED)
-find_package(GLM REQUIRED)
+find_package(glm REQUIRED)
 
 # GLFW 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
