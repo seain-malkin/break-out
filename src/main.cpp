@@ -56,8 +56,8 @@ int main()
 	vertexArray.addBuffer(stBuffer, { 1, 2, GL_FLOAT, 2 * sizeof(float) });
 	vertexArray.addBuffer(indiceBuffer);
 
-	Texture catalina{ "assets/texture/catalina.png" };
-	catalina.generate();
+	Texture container{ "assets/texture/container2.png" };
+	container.generate();
 
 	Shader basicShader{ "assets/shader/basic.3.3.vs", "assets/shader/basic.3.3.fs" };
 
@@ -71,7 +71,7 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		basicShader.bind();
-		catalina.bind();
+		container.bind();
 		vertexArray.bind();
 		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
 
