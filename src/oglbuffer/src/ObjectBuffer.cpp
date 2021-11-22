@@ -1,19 +1,17 @@
 #include <oglbuffer/ObjectBuffer.h>
 
-ObjectBuffer::ObjectBuffer(
-    GLenum target, 
-    GLsizeiptr size, 
-    const void* data, 
-    GLenum usage)
-: glid(0), target(target) 
-{
-    glBindBuffer(target, glid);
-    glBufferData(target, size, data, usage);
-}
+ObjectBuffer::ObjectBuffer(GLenum target)
+: glid(0), target(target) {}
 
 ObjectBuffer::~ObjectBuffer()
 {
     glDeleteBuffers(1, &glid);
+}
+
+void ObjectBuffer::allocate(GLsizeiptr size, const void* data, GLenum usage)
+{
+    glBindBuffer(target, glid);
+    glBufferData(target, size, data, usage);
 }
 
 void ObjectBuffer::bind() const

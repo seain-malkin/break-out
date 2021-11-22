@@ -5,12 +5,10 @@
 class ObjectBuffer
 {
 public:
-	ObjectBuffer(GLenum target, 
-		GLsizeiptr size, 
-		const void* data, 
-		GLenum usage = GL_STATIC_DRAW);
-
+	ObjectBuffer(GLenum target = GL_ARRAY_BUFFER);
 	~ObjectBuffer();
+
+	void allocate(GLsizeiptr size, const void* data, GLenum usage = GL_STATIC_DRAW);
 
 	void bind() const;
 	void unbind() const;

@@ -5,6 +5,8 @@
 #include <glad/glad.h>
 
 #include <oglbuffer/ObjectBuffer.h>
+#include <oglbuffer/VertexArray.h>
+#include <oglbuffer/VertexAttribute.h>
 #include <oglasset/Shader.h>
 #include <oglasset/Texture.h>
 
@@ -60,29 +62,16 @@ int main()
 		return 2;
 	}
 
-	unsigned int vertexBuffer, texCoordBuffer, indiceBuffer, vao;
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
-	glGenBuffers(1, &vertexBuffer);
-	glGenBuffers(1, &texCoordBuffer);
-	glGenBuffers(1, &indiceBuffer);
+	VertexArray vertexArray;
+	ObjectBuffer vertexBuffer, stBuffer, indiceBuffer{ GL_ELEMENT_ARRAY_BUFFER };
 
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
+	vertexBuffer.allocate(sizeof(vertices), vertices);
+	stBuffer.allocate(sizeof(texCoords), texCoords);
+	indiceBuffer.allocate(sizeof(indices), indices);
 
-	glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(1);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiceBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	glBindVertexArray(0);
+	vertexArray.addBuffer(vertexBuffer, { 0, 3, GL_FLOAT, 3 * sizeof(float) });
+	vertexArray.addBuffer(stBuffer, { 1, 2, GL_FLOAT, 2 * sizeof(float) });
+	vertexArray.addBuffer(indiceBuffer);
 
 	Texture catalina{ "assets/texture/catalina.png" };
 	catalina.generate();
@@ -100,16 +89,11 @@ int main()
 
 		basicShader.bind();
 		catalina.bind();
-		glBindVertexArray(vao);
+		vertexArray.bind();
 		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
 	}
-
-	glDeleteBuffers(1, &vertexBuffer);
-	glDeleteTextures(1, &texCoordBuffer);
-	glDeleteBuffers(1, &indiceBuffer);
-	glDeleteVertexArrays(1, &vao);
 
 	glfwTerminate();
 	

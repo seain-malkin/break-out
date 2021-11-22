@@ -9,7 +9,7 @@ class VertexAttribute
             GLint size, 
             GLenum type, 
             GLsizei stride, 
-            const void* offset
+            const void* offset = (void*)0
         );
 
         void enable() const;

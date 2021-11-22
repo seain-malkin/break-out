@@ -10,6 +10,22 @@ VertexArray::~VertexArray()
     glDeleteVertexArrays(1, &glid);
 }
 
+void VertexArray::bind() const
+{
+    
+}
+
+void VertexArray::unbind() const
+{
+
+}
+
+void VertexArray::addBuffer(ObjectBuffer buffer)
+{
+    bind();
+    buffer.bind();
+}
+
 void VertexArray::addBuffer(ObjectBuffer buffer, const VertexAttribute attrib)
 {
     buffer.bind();

@@ -18,6 +18,7 @@ class VertexArray
         void bind() const;
         void unbind() const;
 
+        void addBuffer(ObjectBuffer buffer);
         void addBuffer(ObjectBuffer buffer, VertexAttribute attrib);
 
         void addBuffer(
