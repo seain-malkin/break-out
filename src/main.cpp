@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
+#include <oglengine/Engine.h>
 #include <oglbuffer/ObjectBuffer.h>
 #include <oglbuffer/VertexArray.h>
 #include <oglbuffer/VertexAttribute.h>
@@ -40,27 +41,9 @@ unsigned int indices[] = { 0, 1, 2, 0, 2, 3 };
 
 int main()
 {
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	Engine engine;
 
-	GLFWwindow *window = glfwCreateWindow(600, 600, "Break Out", NULL, NULL);
-
-	if (window == NULL)	
-	{
-		std::cout << "Failed to create window." << std::endl;
-		return 1;
-	}
-
-	glfwMakeContextCurrent(window);
-
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	{
-		glfwTerminate();
-		std::cout << "Failed to load glad." << std::endl;
-		return 2;
-	}
+	engine.start();
 
 	VertexArray vertexArray;
 	ObjectBuffer vertexBuffer, stBuffer, indiceBuffer{ GL_ELEMENT_ARRAY_BUFFER };
@@ -80,7 +63,7 @@ int main()
 
 	glEnable(GL_DEPTH_TEST);
 
-	while (!glfwWindowShouldClose(window))
+	while (!glfwWindowShouldClose(engine.window))
 	{
 		glfwPollEvents();
 
@@ -92,10 +75,8 @@ int main()
 		vertexArray.bind();
 		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
 
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(engine.window);
 	}
-
-	glfwTerminate();
 	
 	return 0;
 }
