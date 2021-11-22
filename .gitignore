@@ -15,4 +15,3 @@ _deps
 /build*
 /_build*
 /include/glfw-3.3.5
-/assets/texture
