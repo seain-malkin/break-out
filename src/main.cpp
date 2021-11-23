@@ -1,5 +1,9 @@
 #include <iostream>
 
+
+#include "Config.h"
+#include <spdlog/spdlog.h>
+
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
@@ -12,8 +16,6 @@
 #include <oglbuffer/VertexAttribute.h>
 #include <oglasset/Shader.h>
 #include <oglasset/Texture.h>
-
-#include "Config.h"
 
 struct Vertex
 {
@@ -46,6 +48,8 @@ int main()
 	Engine engine;
 
 	engine.start();
+
+	spdlog::info("Welcome to Break-Out!");
 
 	VertexArray vertexArray;
 	ObjectBuffer vertexBuffer, stBuffer, indiceBuffer{ GL_ELEMENT_ARRAY_BUFFER };
