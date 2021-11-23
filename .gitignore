@@ -12,6 +12,8 @@ _deps
 
 *.bat
 /.vscode
+/.vs
 /build*
 /_build*
+/install*
 /include/glfw-3.3.5
