@@ -24,7 +24,7 @@ target_compile_options(breakout_compiler_flags INTERFACE
   "$<${msvc_cxx}:$<BUILD_INTERFACE:-W3>>")
 
 # Options
-option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
+#option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 
 add_executable("${PROJECT_NAME}" "src/main.cpp")
 

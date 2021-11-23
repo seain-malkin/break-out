@@ -8,7 +8,7 @@ set(SOURCE_FILES
     "src/Texture.cpp"
 )
 
-add_library(oglasset ${SOURCE_FILES} ${HEADER_FILES})
+add_library(oglasset STATIC ${SOURCE_FILES} ${HEADER_FILES})
 
 target_include_directories(oglasset
     PUBLIC

@@ -1,4 +1,4 @@
-add_library(stb src/stb_image.cpp)
+add_library(stb STATIC src/stb_image.cpp)
 
 target_include_directories(stb
 	PUBLIC

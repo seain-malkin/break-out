@@ -6,7 +6,7 @@ set(SOURCE_FILES
 	src/Engine.cpp
 )
 
-add_library(oglengine ${SOURCE_FILES} ${HEADER_FILES})
+add_library(oglengine STATIC ${SOURCE_FILES} ${HEADER_FILES})
 
 set_target_properties(oglengine PROPERTIES LINKER_LANGUAGE CXX)
 

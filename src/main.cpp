@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 
 #include "Config.h"
@@ -16,6 +17,10 @@
 #include <oglbuffer/VertexAttribute.h>
 #include <oglasset/Shader.h>
 #include <oglasset/Texture.h>
+
+#ifndef PROJECT_NAME
+#define PROJECT_NAME "Warning: @PROJECT_NAME@ not defined"
+#endif
 
 struct Vertex
 {
@@ -49,7 +54,7 @@ int main()
 
 	engine.start();
 
-	spdlog::info("Welcome to Break-Out!");
+	spdlog::info(std::string("Running project: ").append(PROJECT_NAME));
 
 	VertexArray vertexArray;
 	ObjectBuffer vertexBuffer, stBuffer, indiceBuffer{ GL_ELEMENT_ARRAY_BUFFER };

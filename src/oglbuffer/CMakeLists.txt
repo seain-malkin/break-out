@@ -10,7 +10,7 @@ set(SOURCE_FILES
 	src/VertexAttribute.cpp
 )
 
-add_library(oglbuffer ${SOURCE_FILES} ${HEADER_FILES})
+add_library(oglbuffer STATIC ${SOURCE_FILES} ${HEADER_FILES})
 
 set_target_properties(oglbuffer PROPERTIES LINKER_LANGUAGE CXX)
 
