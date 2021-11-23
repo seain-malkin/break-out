@@ -50,9 +50,9 @@ unsigned int indices[] = { 0, 1, 2, 0, 2, 3 };
 
 int main()
 {
-	Engine engine;
+	Engine engine{ { 3, 3, GLFW_OPENGL_CORE_PROFILE} };
 
-	engine.start();
+	engine.launch("BreakOut", 800, 600);
 
 	spdlog::info(std::string("Running project: ").append(PROJECT_NAME));
 
